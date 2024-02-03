@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -76,4 +76,116 @@
       </section>
     </div>
   </body>
+</html>
+ -->
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mosque Prayer Time</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/praytimes/3.4.0/praytimes.min.js"></script>
+    <style>
+        /* Styles remain the same as in the previous example */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mosque Name</h1>
+    </header>
+
+    <main>
+        <div id="prayer-times"></div>
+        <div id="iqamah-time"></div>
+        <div id="digital-clock"></div>
+        <div id="islamic-date"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mosque Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function calculatePrayerTimes(latitude, longitude) {
+            const prayTimes = new PrayTimes();
+            const date = new Date();
+            const times = prayTimes.getTimes(date, [latitude, longitude]);
+
+            return times;
+        }
+
+        function getIqamahTimesFromSheet() {
+            const sheetUrl = 'YOUR_PUBLIC_GOOGLE_SHEET_URL'; // Replace with the actual URL of your Google Sheet
+
+            fetch(sheetUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const iqamahTimes = {
+                        Dhuhr: data.Dhuhr,
+                        Asr: data.Asr,
+                        Maghrib: data.Maghrib,
+                        Isha: data.Isha,
+                    };
+
+                    const iqamahTimesHtml = `
+                        <h2>Iqamah Time</h2>
+                        <p>Dhuhr: ${iqamahTimes.Dhuhr}</p>
+                        <p>Asr: ${iqamahTimes.Asr}</p>
+                        <p>Maghrib: ${iqamahTimes.Maghrib}</p>
+                        <p>Isha: ${iqamahTimes.Isha}</p>
+                    `;
+
+                    document.getElementById('iqamah-time').innerHTML = iqamahTimesHtml;
+                })
+                .catch(error => {
+                    console.error('Error fetching Iqamah times:', error);
+                });
+        }
+
+        function updatePage() {
+            const latitude = 37.7749; // Replace with the actual latitude of the location
+            const longitude = -122.4194; // Replace with the actual longitude of the location
+
+            const prayerTimes = calculatePrayerTimes(latitude, longitude);
+            getIqamahTimesFromSheet();
+
+            const prayerTimesHtml = `
+                <h2>Prayer Times</h2>
+                <p>Fajr: ${prayerTimes.fajr}</p>
+                <p>Dhuhr: ${prayerTimes.dhuhr}</p>
+                <p>Asr: ${prayerTimes.asr}</p>
+                <p>Maghrib: ${prayerTimes.maghrib}</p>
+                <p>Isha: ${prayerTimes.isha}</p>
+            `;
+
+            document.getElementById('prayer-times').innerHTML = prayerTimesHtml;
+        }
+
+        function updateDigitalClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            document.getElementById('digital-clock').textContent = `Current Time: ${timeString}`;
+        }
+
+        function updateIslamicDate() {
+            const now = new Date();
+            const islamicDate = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+            }).format(now);
+
+            document.getElementById('islamic-date').textContent = `Islamic Date: ${islamicDate}`;
+        }
+
+        // Update the page every minute
+        setInterval(updatePage, 60000);
+
+        // Initial update
+        updatePage();
+    </script>
+</body>
 </html>

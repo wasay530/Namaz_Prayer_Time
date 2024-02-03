@@ -117,12 +117,13 @@
         }
 
         function getIqamahTimesFromSheet() {
-            const sheetUrl = 'YOUR_PUBLIC_GOOGLE_SHEET_URL'; // Replace with the actual URL of your Google Sheet
+            const sheetUrl = 'https://docs.google.com/spreadsheets/d/13RcegbhXr1d8xcYwMktzOONx53iO6kTj3pxI-Wfi1_w/edit?usp=sharing'; // Replace with the actual URL of your Google Sheet
 
             fetch(sheetUrl)
                 .then(response => response.json())
                 .then(data => {
                     const iqamahTimes = {
+                        Fajr: data.Fajr,
                         Dhuhr: data.Dhuhr,
                         Asr: data.Asr,
                         Maghrib: data.Maghrib,
@@ -131,10 +132,13 @@
 
                     const iqamahTimesHtml = `
                         <h2>Iqamah Time</h2>
+                        <p>Fajr: ${iqamahTimes.Fajr}</p>
                         <p>Dhuhr: ${iqamahTimes.Dhuhr}</p>
                         <p>Asr: ${iqamahTimes.Asr}</p>
                         <p>Maghrib: ${iqamahTimes.Maghrib}</p>
                         <p>Isha: ${iqamahTimes.Isha}</p>
+                        <p>Ist Jummah: ${iqamahTimes.jummah1}</p>
+                        <p>2nd Jummah: ${iqamahTimes.jummah2}</p>
                     `;
 
                     document.getElementById('iqamah-time').innerHTML = iqamahTimesHtml;
@@ -145,8 +149,8 @@
         }
 
         function updatePage() {
-            const latitude = 37.7749; // Replace with the actual latitude of the location
-            const longitude = -122.4194; // Replace with the actual longitude of the location
+            const latitude = 53.332110; // Replace with the actual latitude of the location
+            const longitude = -6.274940; // Replace with the actual longitude of the location
 
             const prayerTimes = calculatePrayerTimes(latitude, longitude);
             getIqamahTimesFromSheet();

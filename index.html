@@ -86,15 +86,7 @@
     <title>Mosque Prayer Screen</title>
     <style>
         /* Styles remain the same as in the previous example */
-    </style>
-</head>
-<body>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mosque Prayer Screen</title>
-    <style>
-        body {
+      body {
             font-family: 'Arial', sans-serif;
             background-color: #f1f1f1;
             margin: 0;
@@ -115,24 +107,31 @@
             height: 80vh;
         }
 
-        .prayer-container {
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        th, td {
+            padding: 15px;
             text-align: center;
         }
 
-        .prayer-time {
-            font-size: 2em;
-            margin: 10px;
+        th {
+            background-color: #333;
+            color: #fff;
         }
 
-        .iqamah-time {
-            font-size: 1.5em;
-            margin: 10px;
-            color: #555;
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
         }
 
-        .clock {
-            font-size: 3em;
-            margin: 20px;
+        tr:hover {
+            background-color: #ddd;
         }
 
         .date {
@@ -152,51 +151,74 @@
         }
     </style>
 </head>
+<body>
+    <header>
+        <h1>Mosque Name</h1>
+    </header>
 
     <main>
-        <div class="prayer-container">
-            <div class="prayer-time" id="prayer-time">Loading...</div>
-            <div class="iqamah-time" id="iqamah-time">Loading...</div>
-            <div class="clock" id="digital-clock">Loading...</div>
-            <div class="date" id="islamic-date">Loading...</div>
-        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Prayer</th>
+                    <th>Prayer Time</th>
+                    <th>Iqamah Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="fajr">
+                    <td>Fajr</td>
+                    <td id="fajr-prayer-time">Loading...</td>
+                    <td id="fajr-iqamah-time">Loading...</td>
+                </tr>
+                <tr id="dhuhr">
+                    <td>Dhuhr</td>
+                    <td id="dhuhr-prayer-time">Loading...</td>
+                    <td id="dhuhr-iqamah-time">Loading...</td>
+                </tr>
+                <tr id="asr">
+                    <td>Asr</td>
+                    <td id="asr-prayer-time">Loading...</td>
+                    <td id="asr-iqamah-time">Loading...</td>
+                </tr>
+                <tr id="maghrib">
+                    <td>Maghrib</td>
+                    <td id="maghrib-prayer-time">Loading...</td>
+                    <td id="maghrib-iqamah-time">Loading...</td>
+                </tr>
+                <tr id="isha">
+                    <td>Isha</td>
+                    <td id="isha-prayer-time">Loading...</td>
+                    <td id="isha-iqamah-time">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
     </main>
 
     <footer>
         <p>&copy; 2024 Mosque Name. All rights reserved.</p>
     </footer>
 
-    <script src="https://api.aladhan.com/v1/timingsByCity?city=dublin&country=ireland&method=2"></script>
     <script>
-        function updateDigitalClock() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-
-            document.getElementById('digital-clock').textContent = `Current Time: ${timeString}`;
-        }
-
-        function updateIslamicDate() {
-            const now = new Date();
-            const islamicDate = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-            }).format(now);
-
-            document.getElementById('islamic-date').textContent = `Islamic Date: ${islamicDate}`;
-        }
+        let iqamahTimes;
 
         function updatePrayerTimes(prayerTimes) {
-            const prayerTimeHtml = `
-                <h2>Prayer Times</h2>
-                <p>Fajr: ${prayerTimes.data.timings.Fajr}</p>
-                <p>Dhuhr: ${prayerTimes.data.timings.Dhuhr}</p>
-                <p>Asr: ${prayerTimes.data.timings.Asr}</p>
-                <p>Maghrib: ${prayerTimes.data.timings.Maghrib}</p>
-                <p>Isha: ${prayerTimes.data.timings.Isha}</p>
-            `;
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
-            document.getElementById('prayer-time').innerHTML = prayerTimeHtml;
+            prayers.forEach(prayer => {
+                const prayerTime = prayerTimes.data.timings[prayer];
+                const iqamahTime = iqamahTimes[prayer];
+
+                const prayerTimeElement = document.getElementById(`${prayer.toLowerCase()}-prayer-time`);
+                const iqamahTimeElement = document.getElementById(`${prayer.toLowerCase()}-iqamah-time`);
+
+                prayerTimeElement.textContent = prayerTime;
+                iqamahTimeElement.textContent = iqamahTime;
+
+                // Check if it's time for prayer or iqamah and trigger alert
+                checkPrayerTime(prayer, prayerTime);
+                checkIqamahTime(prayer, iqamahTime);
+            });
         }
 
         function getIqamahTimesFromJson() {
@@ -204,8 +226,7 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Fetched Iqamah times from JSON:', data);
-
-                    const iqamahTimes = {
+                    iqamahTimes = {
                         Fajr: data.Fajr,
                         Dhuhr: data.Dhuhr,
                         Asr: data.Asr,
@@ -213,20 +234,46 @@
                         Isha: data.Isha,
                     };
 
-                    const iqamahTimesHtml = `
-                        <h2>Iqamah Time</h2>
-                        <p>Fajr: ${iqamahTimes.Fajr}</p>
-                        <p>Dhuhr: ${iqamahTimes.Dhuhr}</p>
-                        <p>Asr: ${iqamahTimes.Asr}</p>
-                        <p>Maghrib: ${iqamahTimes.Maghrib}</p>
-                        <p>Isha: ${iqamahTimes.Isha}</p>
-                    `;
-
-                    document.getElementById('iqamah-time').innerHTML = iqamahTimesHtml;
+                    updatePrayerTimes(prayerTimes); // Assuming prayerTimes is already fetched
                 })
                 .catch(error => {
                     console.error('Error fetching Iqamah times from JSON:', error);
                 });
+        }
+
+        function checkPrayerTime(prayer, prayerTime) {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            const prayerTimeInMinutes = convertTimeToMinutes(prayerTime);
+
+            if (currentTime === prayerTimeInMinutes) {
+                triggerAlert(`It's time for ${prayer} prayer!`);
+            }
+        }
+
+        function checkIqamahTime(prayer, iqamahTime) {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            const iqamahTimeInMinutes = convertTimeToMinutes(iqamahTime);
+
+            if (currentTime === iqamahTimeInMinutes) {
+                triggerAlert(`It's time for ${prayer} Iqamah!`);
+            }
+        }
+
+        function convertTimeToMinutes(time) {
+            const [hours, minutes] = time.split(':');
+            return parseInt(hours) * 60 + parseInt(minutes);
+        }
+
+        function triggerAlert(message) {
+            alert(message);
+            playAlertSound();
+        }
+
+        function playAlertSound() {
+            const audio = new Audio('alert.mp3'); // Replace with the path to your alert sound file
+            audio.play();
         }
 
         // Fetch prayer times from API
@@ -234,7 +281,7 @@
 
         function fetchPrayerTimes() {
             // Replace YOUR_CITY and YOUR_COUNTRY with actual values
-            const apiUrl = 'https://api.aladhan.com/v1/timingsByCity?city=dublin&country=ireland&method=2';
+            const apiUrl = 'http://api.aladhan.com/v1/hijriCalendar/1437/4?latitude=53.332111&longitude=-6.274940&method=2';
 
             fetch(apiUrl)
                 .then(response => response.json())
@@ -250,14 +297,11 @@
 
         // Update the page every minute
         setInterval(() => {
-            updateDigitalClock();
-            updateIslamicDate();
-            fetchPrayerTimes();
+            updatePrayerTimes(prayerTimes);
         }, 60000);
 
         // Initial update
-        updateDigitalClock();
-        updateIslamicDate();
+        updatePrayerTimes(prayerTimes);
     </script>
 </body>
 </html>

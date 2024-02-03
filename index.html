@@ -1,98 +1,79 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Mosque Information Screen</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="./css/bootstrap-grid.min.css" />
-</head>
-<body>
-    <div class="row">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="/islamic-prayer-times/icon/praying-128.png"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta name="description" content="Web site that displays prayer times"/>
+    <link rel="shortcut icon" href="/islamic-prayer-times/icon/favicon.ico" type="image/x-icon"/>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+    <link rel="manifest" href="/islamic-prayer-times/manifest.json"/>
+    <title>Muslim Prayer Times</title><script defer="defer" src="/islamic-prayer-times/static/js/main.680d08e4.js">
+      
+    </script>
+    <link href="/islamic-prayer-times/static/css/main.ddd4cae1.css" rel="stylesheet">
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+       <!-- 
+        - #STATS
+      -->
 
-    
-        <div class="col-6 section-time-and-notices">
-            <div class="datetime">
-                <div id="clock"></div>
-            </div>
-            <div id="dayOfTheWeek"></div>
-            <div id="date"></div>
-            <div id="islamicDate"></div>
+      <section class="stats" id="stats">
+        <ul class="stats-list">
 
-            <div class="donation-text">
-                <p class="italic">You can donate by texting</p>
-                <p class="bold text-info">ELMT12 &pound;5 to 70070</p>
-                <p class="italic">or &pound;1, &pound;2, &pound;3, &pound;4 or &pound;10</p>
-            </div>
-            
-        </div>
-        <!-- <div id="logo">
-            <img src="./images/elm_logo.png" alt="logo">
-        </div> -->
-        <div class="col-6 section-prayer-times">
-            <table class="daily-prayer-times">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                        <th>Begins</th>
-                        <th>Jama'ah</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>Fajr</th>
-                        <td></td>
-                        <td id="fajr_begins">0:00</td>
-                        <td id="fajr_jamaah">0:00</td>
-                    </tr>
-                    <tr>
-                        <th>Zuhr</th>
-                        <td></td>
-                        <td id="zuhr_begins">0:00</td>
-                        <td id="zuhr_jamaah">0:00</td>
-                    </tr>
-                    <tr>
-                        <th rowspan="2">'Asr</th>
-                        <td class="mithl-text">mithl 1</td>
-                        <td id="asr1_begins">0:00</td>
-                        <td id="asr_jamaah" rowspan="2">0:00</td>
-                    </tr>
-                    <tr>
-                        <td class="mithl-text">mithl 2</td>
-                        <td id="asr2_begins">0:00</td>
-                    </tr>
-                    <tr>
-                        <th>Maghrib</th>
-                        <td></td>
-                        <td id="maghrib_begins">0:00</td>
-                        <td id="maghrib_jamaah">0:00</td>
-                    </tr>
-                    <tr>
-                        <th>Isha</th>
-                        <td></td>
-                        <td id="isha_begins">0:00</td>
-                        <td id="isha_jamaah">0:00</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+          <li>
+            <a href="#" class="stats-card">
+
+              <div class="card-icon">
+                <img src="./assets/images/stats-card_icon-1.png" alt="Badge icon">
+              </div>
+
+              <h2 class="h2 card-title">
+                4+ <strong>Years of Experience</strong>
+              </h2>
+
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="stats-card">
+
+              <div class="card-icon">
+                <img src="./assets/images/stats-card_icon-2.png" alt="Checkmark icon">
+              </div>
+
+              <h2 class="h2 card-title">
+                250+ <strong>Completed Projects</strong>
+              </h2>
+
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="stats-card">
+
+              <div class="card-icon">
+                <img src="./assets/images/stats-card_icon-3.png" alt="Peoples rating icon">
+              </div>
+
+              <h2 class="h2 card-title">
+                120+ <strong>Happy Clients</strong>
+              </h2>
+
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+
+            </a>
+          </li>
+
+        </ul>
+      </section>
     </div>
-
-    
-    
-    
-
-
-    <button id="toggleFullScreen">Start</button>
-
-    <script src="./js/lib/jquery.js"></script>
-    <script src="./js/lib/moment.js"></script>
-    <script src="./js/lib/moment-hijri.js"></script>
-    <script src="./js/clock.class.js"></script>
-    <script src="./js/screen.class.js"></script>
-    <script src="./js/prayer-times.class.js"></script>
-    <script src="./js/main.js"></script>
-</body>
+  </body>
 </html>

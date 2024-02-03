@@ -157,6 +157,12 @@
     </header>
 
     <main>
+     <div class="info-container">
+            <div class="clock" id="digital-clock">Loading...</div>
+            <div class="date" id="gregorian-date">Loading...</div>
+            <div class="date" id="islamic-date">Loading...</div>
+        </div>
+      </div>
         <table>
             <thead>
                 <tr>
@@ -200,7 +206,7 @@
     </footer>
 
     <script>
-        let iqamahTimes;
+                let iqamahTimes;
 
         function updatePrayerTimes(prayerTimes) {
             const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
@@ -222,7 +228,7 @@
         }
 
         function getIqamahTimesFromJson() {
-            fetch('data.json')
+            fetch('iqamah_times.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('Fetched Iqamah times from JSON:', data);
@@ -276,12 +282,54 @@
             audio.play();
         }
 
+        function updateDigitalClock() {
+            const now = new Date();
+            const timeString = formatTime(now);
+
+            document.getElementById('digital-clock').textContent = `Current Time: ${timeString}`;
+        }
+
+      function updateGregorianDate() {
+            const now = new Date();
+            const gregorianDate = now.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
+
+            document.getElementById('gregorian-date').textContent = `Gregorian Date: ${gregorianDate}`;
+        }
+
+        function updateIslamicDate() {
+            const now = new Date();
+            const islamicDate = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+            }).format(now);
+
+            document.getElementById('islamic-date').textContent = `Islamic Date: ${islamicDate}`;
+        }
+      
+        function formatTime(date) {
+            const hours = padZero(date.getHours());
+            const minutes = padZero(date.getMinutes());
+            const seconds = padZero(date.getSeconds());
+
+            return `${hours}:${minutes}:${seconds}`;
+        }
+
+        function padZero(number) {
+            return number < 10 ? `0${number}` : number;
+        }
+
         // Fetch prayer times from API
         fetchPrayerTimes();
 
         function fetchPrayerTimes() {
             // Replace YOUR_CITY and YOUR_COUNTRY with actual values
-            const apiUrl = 'http://api.aladhan.com/v1/hijriCalendar/1437/4?latitude=53.332111&longitude=-6.274940&method=2';
+            const apiUrl = 'https://api.aladhan.com/v1/timingsByCity?city=dublin&country=ireland&method=2';
 
             fetch(apiUrl)
                 .then(response => response.json())
@@ -295,13 +343,20 @@
                 });
         }
 
-        // Update the page every minute
+        // Update the page every second
+        // Update the page every second
         setInterval(() => {
             updatePrayerTimes(prayerTimes);
-        }, 60000);
+            updateDigitalClock();
+            updateGregorianDate();
+            updateIslamicDate();
+        }, 1000);
 
         // Initial update
         updatePrayerTimes(prayerTimes);
+        updateDigitalClock();
+        updateGregorianDate();
+        updateIslamicDate();
     </script>
 </body>
 </html>

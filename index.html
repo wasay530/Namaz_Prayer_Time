@@ -206,7 +206,7 @@
     </footer>
 
     <script>
-                let iqamahTimes;
+        let iqamahTimes;
 
         function updatePrayerTimes(prayerTimes) {
             const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
@@ -228,7 +228,7 @@
         }
 
         function getIqamahTimesFromJson() {
-            fetch('iqamah_times.json')
+            fetch('data.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('Fetched Iqamah times from JSON:', data);

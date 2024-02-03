@@ -326,7 +326,7 @@
         const now = new Date();
         const timeString = formatTime(now);
 
-        document.getElementById('digital-clock').textContent = `Current Time: ${timeString}`;
+        document.getElementById('digital-clock').textContent = `${timeString}`;
     }
 
     function updateGregorianDate() {
@@ -338,7 +338,7 @@
             day: 'numeric',
         });
 
-        document.getElementById('gregorian-date').textContent = `Gregorian Date: ${gregorianDate}`;
+        document.getElementById('gregorian-date').textContent = `${gregorianDate}`;
     }
 
     function updateIslamicDate() {
@@ -349,7 +349,7 @@
             year: 'numeric',
         }).format(now);
 
-        document.getElementById('islamic-date').textContent = `Islamic Date: ${islamicDate}`;
+        document.getElementById('islamic-date').textContent = `${islamicDate}`;
     }
 
     function formatTime(date) {

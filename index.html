@@ -153,10 +153,13 @@
                 .then(response => response.json())
                 .then(data => {
                     const iqamahTimes = {
+                        Fajr: data.Fajr,
                         Dhuhr: data.Dhuhr,
                         Asr: data.Asr,
                         Maghrib: data.Maghrib,
                         Isha: data.Isha,
+                        jummah1: data.jummah1,
+                        jummah2: data.jummah2, 
                     };
 
                     const iqamahTimesHtml = `
@@ -165,6 +168,9 @@
                         <p>Asr: ${iqamahTimes.Asr}</p>
                         <p>Maghrib: ${iqamahTimes.Maghrib}</p>
                         <p>Isha: ${iqamahTimes.Isha}</p>
+                        <p>Ist Jummah: ${iqamahTimes.jummah1}</p>
+                        <p>2nd Jummah: ${iqamahTimes.jummah2}</p>
+                        
                     `;
 
                     document.getElementById('iqamah-time').innerHTML = iqamahTimesHtml;

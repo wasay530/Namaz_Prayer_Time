@@ -140,7 +140,7 @@
         }
 
         function getIqamahTimesFromJson() {
-            fetch('iqamah_times.json')
+            fetch('https://github.com/wasay530/islamic-prayer-times/blob/main/data.json')
                 .then(response => response.json())
                 .then(data => {
                     console.log('Fetched Iqamah times from JSON:', data);

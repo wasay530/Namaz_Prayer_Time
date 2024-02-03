@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Islamic Prayer Times",
   "short_name": "Prayer Times",
-  "author": "Mohamed Hafez",
+  "author": "Abdul Wasay Sardar",
   "version": "1.1.1",
   "description": "Islamic Prayer Times provides You with Hijri Date, Prayer Times, and the remaining time for the next pray depending on your time zone.",
   "theme_color": "#000000",

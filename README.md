@@ -1,7 +1,7 @@
 
-# [Islamic Prayer Times](https://m-hafez22.github.io/islamic-prayer-times/)
+# [Islamic Prayer Times](https://wasay530.github.io/Namaz_Prayer_Time/)
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/m-hafez22/islamic-prayer-times)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/wasay530/Namaz_Prayer_Time)
 ![commet](https://img.shields.io/github/commits-since/m-hafez22/islamic-prayer-times/v1.1.4.svg?logo=github)
 
 [![Mozilla Add-on](https://img.shields.io/badge/-Mozilla_Add--on-20123A?logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/islamic-prayer-times/)
@@ -9,11 +9,11 @@
 ![Mozilla Add-on](https://img.shields.io/amo/stars/islamic-prayer-times)
 
 [![Docker](https://img.shields.io/badge/-Docker_Image-2497EC?style=for-the-badge&logoColor=fff&logo=docker)](https://hub.docker.com/r/mohamedhafez/islamic_prayer_times)
-[![RainWallpaper](https://img.shields.io/badge/RainWallpaper-100000?style=for-the-badge&logo=github)](https://github.com/M-Hafez22/Prayer_Times)
+[![RainWallpaper](https://img.shields.io/badge/RainWallpaper-100000?style=for-the-badge&logo=github)](https://wasay530.github.io/Namaz_Prayer_Time)
 
 A web Application that provides You with **Hijri Date**, **Prayer Times**, and **The Remaining Time to the next prayer** depending on your time zone.
 
-Go to [Islamic Prayer Times](https://m-hafez22.github.io/islamic-prayer-times/)
+Go to [Islamic Prayer Times](https://wasay530.github.io/Namaz_Prayer_Time/)
 
 ![App preview](./Readme_assets/app-preview.png)
 
@@ -101,7 +101,7 @@ From your command line:
 
 ### Build for Chrome
 
-> You can download the Chrome extension release from [Here](https://github.com/M-Hafez22/islamic-prayer-times/releases/download/v1.1.5/islamic-prayer-times-chrome-extention-v1.1.5.zip)
+> You can download the Chrome extension release from [Here](https://wasay530.github.io/Namaz_Prayer_Time/releases/download/v1.1.5/islamic-prayer-times-chrome-extention-v1.1.5.zip)
 
 - Open [package.json](./package.json) and make sure that **homepage** set to **.** the current directory
 
@@ -123,7 +123,7 @@ From your command line:
 
 ### RainWallpaper
 
-The RainWallpaper theme is in this repository [Prayer_Times](https://github.com/M-Hafez22/Prayer_Times)
+The RainWallpaper theme is in this repository [Prayer_Times](https://wasay530.github.io/Namaz_Prayer_Time/)
 
 ## Inspiration
 

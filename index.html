@@ -206,9 +206,11 @@
     </footer>
 
     <script>
-        let iqamahTimes;
+    let iqamahTimes;
+    let prayerTimes;
 
-        function updatePrayerTimes(prayerTimes) {
+    function updatePrayerTimes() {
+        if (prayerTimes && iqamahTimes) {
             const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
             prayers.forEach(prayer => {
@@ -221,142 +223,142 @@
                 prayerTimeElement.textContent = prayerTime;
                 iqamahTimeElement.textContent = iqamahTime;
 
-                // Check if it's time for prayer or iqamah and trigger alert
                 checkPrayerTime(prayer, prayerTime);
                 checkIqamahTime(prayer, iqamahTime);
             });
         }
+    }
 
-        function getIqamahTimesFromJson() {
-            fetch('data.json')
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Fetched Iqamah times from JSON:', data);
-                    iqamahTimes = {
-                        Fajr: data.Fajr,
-                        Dhuhr: data.Dhuhr,
-                        Asr: data.Asr,
-                        Maghrib: data.Maghrib,
-                        Isha: data.Isha,
-                    };
+    function fetchPrayerTimes() {
+        const apiUrl = 'https://api.aladhan.com/v1/timingsByCity?city=dublin&country=ireland&method=2';
 
-                    updatePrayerTimes(prayerTimes); // Assuming prayerTimes is already fetched
-                })
-                .catch(error => {
-                    console.error('Error fetching Iqamah times from JSON:', error);
-                });
-        }
-
-        function checkPrayerTime(prayer, prayerTime) {
-            const now = new Date();
-            const currentTime = now.getHours() * 60 + now.getMinutes();
-            const prayerTimeInMinutes = convertTimeToMinutes(prayerTime);
-
-            if (currentTime === prayerTimeInMinutes) {
-                triggerAlert(`It's time for ${prayer} prayer!`);
-            }
-        }
-
-        function checkIqamahTime(prayer, iqamahTime) {
-            const now = new Date();
-            const currentTime = now.getHours() * 60 + now.getMinutes();
-            const iqamahTimeInMinutes = convertTimeToMinutes(iqamahTime);
-
-            if (currentTime === iqamahTimeInMinutes) {
-                triggerAlert(`It's time for ${prayer} Iqamah!`);
-            }
-        }
-
-        function convertTimeToMinutes(time) {
-            const [hours, minutes] = time.split(':');
-            return parseInt(hours) * 60 + parseInt(minutes);
-        }
-
-        function triggerAlert(message) {
-            alert(message);
-            playAlertSound();
-        }
-
-        function playAlertSound() {
-            const audio = new Audio('alert.mp3'); // Replace with the path to your alert sound file
-            audio.play();
-        }
-
-        function updateDigitalClock() {
-            const now = new Date();
-            const timeString = formatTime(now);
-
-            document.getElementById('digital-clock').textContent = `Current Time: ${timeString}`;
-        }
-
-      function updateGregorianDate() {
-            const now = new Date();
-            const gregorianDate = now.toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched prayer times from API:', data);
+                prayerTimes = data;
+                updatePrayerTimes();
+            })
+            .catch(error => {
+                console.error('Error fetching prayer times from API:', error);
             });
+    }
 
-            document.getElementById('gregorian-date').textContent = `Gregorian Date: ${gregorianDate}`;
+    function getIqamahTimesFromJson() {
+        fetch('iqamah_times.json')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Fetched Iqamah times from JSON:', data);
+                iqamahTimes = {
+                    Fajr: data.Fajr,
+                    Dhuhr: data.Dhuhr,
+                    Asr: data.Asr,
+                    Maghrib: data.Maghrib,
+                    Isha: data.Isha,
+                };
+
+                updatePrayerTimes();
+            })
+            .catch(error => {
+                console.error('Error fetching Iqamah times from JSON:', error);
+            });
+    }
+
+    function checkPrayerTime(prayer, prayerTime) {
+        const now = new Date();
+        const currentTime = now.getHours() * 60 + now.getMinutes();
+        const prayerTimeInMinutes = convertTimeToMinutes(prayerTime);
+
+        if (currentTime === prayerTimeInMinutes) {
+            triggerAlert(`It's time for ${prayer} prayer!`);
         }
+    }
 
-        function updateIslamicDate() {
-            const now = new Date();
-            const islamicDate = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-            }).format(now);
+    function checkIqamahTime(prayer, iqamahTime) {
+        const now = new Date();
+        const currentTime = now.getHours() * 60 + now.getMinutes();
+        const iqamahTimeInMinutes = convertTimeToMinutes(iqamahTime);
 
-            document.getElementById('islamic-date').textContent = `Islamic Date: ${islamicDate}`;
+        if (currentTime === iqamahTimeInMinutes) {
+            triggerAlert(`It's time for ${prayer} Iqamah!`);
         }
-      
-        function formatTime(date) {
-            const hours = padZero(date.getHours());
-            const minutes = padZero(date.getMinutes());
-            const seconds = padZero(date.getSeconds());
+    }
 
-            return `${hours}:${minutes}:${seconds}`;
-        }
+    function convertTimeToMinutes(time) {
+        const [hours, minutes] = time.split(':');
+        return parseInt(hours) * 60 + parseInt(minutes);
+    }
 
-        function padZero(number) {
-            return number < 10 ? `0${number}` : number;
-        }
+    function triggerAlert(message) {
+        alert(message);
+        playAlertSound();
+    }
 
-        // Fetch prayer times from API
-        fetchPrayerTimes();
+    function playAlertSound() {
+        // You can replace the path with the location of your alert sound file
+        const audio = new Audio('alert.mp3');
+        audio.play();
+    }
 
-        function fetchPrayerTimes() {
-            // Replace YOUR_CITY and YOUR_COUNTRY with actual values
-            const apiUrl = 'https://api.aladhan.com/v1/timingsByCity?city=dublin&country=ireland&method=2';
+    function updateDigitalClock() {
+        const now = new Date();
+        const timeString = formatTime(now);
 
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Fetched prayer times from API:', data);
-                    updatePrayerTimes(data);
-                    getIqamahTimesFromJson();
-                })
-                .catch(error => {
-                    console.error('Error fetching prayer times from API:', error);
-                });
-        }
+        document.getElementById('digital-clock').textContent = `Current Time: ${timeString}`;
+    }
 
-        // Update the page every second
-        // Update the page every second
-        setInterval(() => {
-            updatePrayerTimes(prayerTimes);
-            updateDigitalClock();
-            updateGregorianDate();
-            updateIslamicDate();
-        }, 1000);
+    function updateGregorianDate() {
+        const now = new Date();
+        const gregorianDate = now.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
 
-        // Initial update
-        updatePrayerTimes(prayerTimes);
+        document.getElementById('gregorian-date').textContent = `Gregorian Date: ${gregorianDate}`;
+    }
+
+    function updateIslamicDate() {
+        const now = new Date();
+        const islamicDate = new Intl.DateTimeFormat('en-US-u-ca-islamic', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        }).format(now);
+
+        document.getElementById('islamic-date').textContent = `Islamic Date: ${islamicDate}`;
+    }
+
+    function formatTime(date) {
+        const hours = padZero(date.getHours());
+        const minutes = padZero(date.getMinutes());
+        const seconds = padZero(date.getSeconds());
+
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
+    function padZero(number) {
+        return number < 10 ? `0${number}` : number;
+    }
+
+    // Fetch prayer times from API
+    fetchPrayerTimes();
+
+    // Initial update
+    updateDigitalClock();
+    updateGregorianDate();
+    updateIslamicDate();
+    getIqamahTimesFromJson();
+
+    // Update the page every second
+    setInterval(() => {
+        updatePrayerTimes();
         updateDigitalClock();
         updateGregorianDate();
         updateIslamicDate();
-    </script>
+    }, 1000);
+</script>
+
 </body>
 </html>

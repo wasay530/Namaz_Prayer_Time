@@ -84,7 +84,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mosque Prayer Screen</title>
-    <style>
+   <style>
         body {
             font-family: 'Arial', sans-serif;
             background-color: #f1f1f1;
@@ -108,14 +108,39 @@
         }
 
         .info-container {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
             margin-bottom: 20px;
         }
 
-        .clock, .date, .islamic-date {
-            font-size: 1.5em;
+        .triangle {
+            position: relative;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+        }
+
+        .clock {
+            border-bottom: 43.3px solid #333; /* 25 * sqrt(3) / 2 */
             margin: 10px;
-            color: #333;
+            padding: 10px;
+            color: #fff;
+        }
+
+        .date {
+            border-bottom: 43.3px solid #333; /* 25 * sqrt(3) / 2 */
+            margin: 10px;
+            padding: 10px;
+            color: #fff;
+        }
+
+        .islamic-date {
+            border-bottom: 43.3px solid #333; /* 25 * sqrt(3) / 2 */
+            margin: 10px;
+            padding: 10px;
+            color: #fff;
         }
 
         table {
@@ -163,9 +188,15 @@
 
     <main>
      <div class="info-container">
-            <div class="clock" id="digital-clock">Loading...</div>
-            <div class="date" id="gregorian-date">Loading...</div>
-            <div class="date" id="islamic-date">Loading...</div>
+            <div class="triangle">
+                <div class="clock" id="digital-clock">Loading...</div>
+            </div>
+            <div class="triangle">
+                <div class="date" id="gregorian-date">Loading...</div>
+            </div>
+            <div class="triangle">
+                <div class="islamic-date" id="islamic-date">Loading...</div>
+            </div>
         </div>
         <table>
             <thead>

@@ -2,7 +2,7 @@
 # [Islamic Prayer Times](https://wasay530.github.io/islamic-prayer-times/)
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/wasay530/islamic-prayer-times)
-![commet](https://img.shields.io/github/commits-since/m-hafez22/islamic-prayer-times/v1.1.4.svg?logo=github)
+![commet](https://img.shields.io/github/commits-since/wasay530/islamic-prayer-times/v1.1.4.svg?logo=github)
 
 [![Mozilla Add-on](https://img.shields.io/badge/-Mozilla_Add--on-20123A?logo=firefox)](https://addons.mozilla.org/en-US/firefox/addon/islamic-prayer-times/)
 ![Mozilla Add-on](https://img.shields.io/amo/users/islamic-prayer-times?style=falt&logo=firefox)
@@ -66,7 +66,7 @@ From your command line:
 > It's recommended to use lts Node version
 
 1. Clone this repository
-  `git clone https://github.com/M-Hafez22/islamic-prayer-times.git`
+  `git clone https://github.com/wasay530/islamic-prayer-times.git`
 2. Go into the repository
   `cd islamic-prayer-times`
 3. Install dependencies

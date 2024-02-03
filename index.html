@@ -1,4 +1,4 @@
-<!doctype html>
+<!-- <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -20,7 +20,7 @@
        <!-- 
         - #STATS
       -->
-
+<!-- 
       <section class="stats" id="stats">
         <ul class="stats-list">
 
@@ -76,4 +76,232 @@
       </section>
     </div>
   </body>
+</html>
+ --> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mosque Prayer Screen</title>
+    <style>
+        /* Styles remain the same as in the previous example */
+      body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .date {
+            font-size: 1.2em;
+            margin: 10px;
+            color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mosque Name</h1>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Prayer</th>
+                    <th>Prayer Time</th>
+                    <th>Iqamah Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="fajr">
+                    <td>Fajr</td>
+                    <td id="fajr-prayer-time">Loading...</td>
+                    <td id="fajr-iqamah-time">Loading...</td>
+                </tr>
+                <tr id="dhuhr">
+                    <td>Dhuhr</td>
+                    <td id="dhuhr-prayer-time">Loading...</td>
+                    <td id="dhuhr-iqamah-time">Loading...</td>
+                </tr>
+                <tr id="asr">
+                    <td>Asr</td>
+                    <td id="asr-prayer-time">Loading...</td>
+                    <td id="asr-iqamah-time">Loading...</td>
+                </tr>
+                <tr id="maghrib">
+                    <td>Maghrib</td>
+                    <td id="maghrib-prayer-time">Loading...</td>
+                    <td id="maghrib-iqamah-time">Loading...</td>
+                </tr>
+                <tr id="isha">
+                    <td>Isha</td>
+                    <td id="isha-prayer-time">Loading...</td>
+                    <td id="isha-iqamah-time">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mosque Name. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let iqamahTimes;
+
+        function updatePrayerTimes(prayerTimes) {
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+
+            prayers.forEach(prayer => {
+                const prayerTime = prayerTimes.data.timings[prayer];
+                const iqamahTime = iqamahTimes[prayer];
+
+                const prayerTimeElement = document.getElementById(`${prayer.toLowerCase()}-prayer-time`);
+                const iqamahTimeElement = document.getElementById(`${prayer.toLowerCase()}-iqamah-time`);
+
+                prayerTimeElement.textContent = prayerTime;
+                iqamahTimeElement.textContent = iqamahTime;
+
+                // Check if it's time for prayer or iqamah and trigger alert
+                checkPrayerTime(prayer, prayerTime);
+                checkIqamahTime(prayer, iqamahTime);
+            });
+        }
+
+        function getIqamahTimesFromJson() {
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched Iqamah times from JSON:', data);
+                    iqamahTimes = {
+                        Fajr: data.Fajr,
+                        Dhuhr: data.Dhuhr,
+                        Asr: data.Asr,
+                        Maghrib: data.Maghrib,
+                        Isha: data.Isha,
+                    };
+
+                    updatePrayerTimes(prayerTimes); // Assuming prayerTimes is already fetched
+                })
+                .catch(error => {
+                    console.error('Error fetching Iqamah times from JSON:', error);
+                });
+        }
+
+        function checkPrayerTime(prayer, prayerTime) {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            const prayerTimeInMinutes = convertTimeToMinutes(prayerTime);
+
+            if (currentTime === prayerTimeInMinutes) {
+                triggerAlert(`It's time for ${prayer} prayer!`);
+            }
+        }
+
+        function checkIqamahTime(prayer, iqamahTime) {
+            const now = new Date();
+            const currentTime = now.getHours() * 60 + now.getMinutes();
+            const iqamahTimeInMinutes = convertTimeToMinutes(iqamahTime);
+
+            if (currentTime === iqamahTimeInMinutes) {
+                triggerAlert(`It's time for ${prayer} Iqamah!`);
+            }
+        }
+
+        function convertTimeToMinutes(time) {
+            const [hours, minutes] = time.split(':');
+            return parseInt(hours) * 60 + parseInt(minutes);
+        }
+
+        function triggerAlert(message) {
+            alert(message);
+            playAlertSound();
+        }
+
+        function playAlertSound() {
+            const audio = new Audio('alert.mp3'); // Replace with the path to your alert sound file
+            audio.play();
+        }
+
+        // Fetch prayer times from API
+        fetchPrayerTimes();
+
+        function fetchPrayerTimes() {
+            // Replace YOUR_CITY and YOUR_COUNTRY with actual values
+            const apiUrl = 'http://api.aladhan.com/v1/hijriCalendar/1437/4?latitude=53.332111&longitude=-6.274940&method=2';
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched prayer times from API:', data);
+                    updatePrayerTimes(data);
+                    getIqamahTimesFromJson();
+                })
+                .catch(error => {
+                    console.error('Error fetching prayer times from API:', error);
+                });
+        }
+
+        // Update the page every minute
+        setInterval(() => {
+            updatePrayerTimes(prayerTimes);
+        }, 60000);
+
+        // Initial update
+        updatePrayerTimes(prayerTimes);
+    </script>
+</body>
 </html>

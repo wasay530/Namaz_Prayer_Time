@@ -350,6 +350,7 @@
         const iqamahTimeInMinutes = convertTimeToMinutes(iqamahTime);
 
         if (currentTime === iqamahTimeInMinutes) {
+            playAlertSound();
             triggerAlert(`It's time for ${prayer} Iqamah!`);
         }
     }

@@ -298,7 +298,8 @@
     }
 
     function fetchPrayerTimes() {
-        const apiUrl = 'https://api.aladhan.com/v1/timingsByCity?city=dublin&country=ireland&method=2';
+        // const apiUrl = 'https://api.aladhan.com/v1/timingsByCity?city=dublin&country=ireland&method=2';
+           const apiUrl = 'http://api.aladhan.com/v1/timingsByAddress?address=109 S Circular Rd, Portobello, Dublin';
 
         fetch(apiUrl)
             .then(response => response.json())

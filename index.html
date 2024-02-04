@@ -260,12 +260,12 @@
                     <td id="isha-prayer-time">Loading...</td>
                     <td id="isha-iqamah-time">Loading...</td>
                 </tr>
-              <tr id="Dhuhr">
+              <tr id="dhuhr">
                     <td>Ist Jummah</td>
                     <td id="dhuhr-prayer-time">Loading...</td>
                     <td id="jummah1-iqamah-time">Loading...</td>
                 </tr>
-                <tr id="Dhuhr">
+                <tr id="dhuhr">
                     <td>2nd Jummah</td>
                     <td id="dhuhr-prayer-time">Loading...</td>
                     <td id="jummah2-iqamah-time">Loading...</td>
@@ -284,7 +284,7 @@
 
     function updatePrayerTimes() {
         if (prayerTimes && iqamahTimes) {
-            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha', 'Jummah1', 'Jummah2];
 
             prayers.forEach(prayer => {
                 const prayerTime = prayerTimes.data.timings[prayer];

@@ -215,11 +215,11 @@
     </header>
 
     <main>
-      <div class="info-container">
+<!--       <div class="info-container">
             <div class="rounded-rectangle-container">
                 <div class="clock" >Surely the prayers at fixed hours has been enjoined upon the believers." (Quran 4:103)</div>
             </div>
-        </div>
+        </div> -->
       
      <div class="info-container">
             <div class="rounded-rectangle-container">
@@ -284,7 +284,7 @@
 
     function updatePrayerTimes() {
         if (prayerTimes && iqamahTimes) {
-            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+            const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha', 'Jummah1', 'Jummah2'];
 
             prayers.forEach(prayer => {
                 const prayerTime = prayerTimes.data.timings[prayer];
